@@ -1,8 +1,14 @@
 import React from 'react'
+import LoginForm from './LoginFrom'
 
 function Login() {
+
+  
   return (
-    <div>Login</div>
+    <div className=''>
+     <LoginForm/>
+    </div>
+
   )
 }
 
