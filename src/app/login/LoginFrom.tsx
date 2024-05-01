@@ -3,32 +3,21 @@ import React from 'react'
 import { Button, Form, Input } from 'antd'
 import { handleErrorMessage } from '@/lib/utils'
 import { useAppContext } from '@/AppProvider'
+import configProject from '@/config'
+import { login } from '@/service/auth'
+import { useRouter } from 'next/navigation'
 
 function LoginForm() {
+  const router = useRouter()
   const {setSesstionToken} = useAppContext()
-    const onFinish = async() => {
+    const onFinish = async(payload: any) => {
+      console.log(payload)
       try {
-        const data = await fetch('/api/auth',{
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-         body: JSON.stringify({payload: 'username'})
-        }).then(async (response) =>{
-          const payload = await response.json();
-          const data = {
-            status: response.status,
-            payload
-          }
-          if (response.ok){
-            throw data
-          }
-          return data
-        })
-        setSesstionToken(data.payload?.data?.token)
+        const data = await login(payload);
         console.log(data)
+        router.push('/')
       } catch (error) {
-        handleErrorMessage(error)
+        console.log(error)
       }
     }
 

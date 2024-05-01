@@ -5,7 +5,7 @@ function Login() {
 
   
   return (
-    <div className=''>
+    <div>
      <LoginForm/>
     </div>
 

@@ -19,8 +19,8 @@ export default function RootLayout({
   const cookieStore = cookies();
   const sessionToken = cookieStore.get("sessionToken");
   return (
-    <html lang="en">
-      <body className='min-h-screen'>
+    <html suppressHydrationWarning={true} lang="en">
+      <body className="min-h-screen">
         <AppProvider initSessiontoken = {sessionToken?.value}>
         {children}
         </AppProvider>
