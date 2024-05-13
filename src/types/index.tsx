@@ -1,3 +1,3 @@
-export type ICustomOption = RequestInit & {
+export type ICustomOption = Omit<RequestInit,  'method'> & {
     baseUrl?: string | undefined
 }

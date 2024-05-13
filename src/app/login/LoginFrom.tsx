@@ -1,20 +1,14 @@
 'use client'
-import React from 'react'
+import { authApiRequest, login } from '@/service/auth'
 import { Button, Form, Input } from 'antd'
-import { handleErrorMessage } from '@/lib/utils'
-import { useAppContext } from '@/AppProvider'
-import configProject from '@/config'
-import { login } from '@/service/auth'
 import { useRouter } from 'next/navigation'
 
 function LoginForm() {
   const router = useRouter()
-  const {setSesstionToken} = useAppContext()
     const onFinish = async(payload: any) => {
-      console.log(payload)
       try {
-        const data = await login(payload);
-        console.log(data)
+        const data:any = await login(payload);
+        await authApiRequest.authNextServer(data.payload)
         router.push('/')
       } catch (error) {
         console.log(error)

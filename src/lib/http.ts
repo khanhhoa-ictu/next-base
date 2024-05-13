@@ -12,6 +12,22 @@ class HttpError extends Error {
     }
 }
 
+class SessionToken {
+    private token = ""
+    get value(){
+        return this.token
+    }
+    set value(token){
+        if(typeof window === 'undefined'){
+            throw new Error('can not set token on sever side')
+        }
+        this.token = token
+    }
+
+}
+
+export const clientToken = new SessionToken()
+
 const request = async (method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, option?: ICustomOption | undefined) =>{
     const body = option?.body ? JSON.stringify(option.body) : undefined;
     const baseHeaders = {
@@ -33,12 +49,19 @@ const request = async (method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, o
         status: res.status,
         payload
     }
+    
     if(!res?.ok){
         throw new HttpError(data)
     }
+    if(['/auth/login'].includes(url)){
+        clientToken.value = (payload as any).token
+    }
+    if('auth/logout'.includes(url)){
+        clientToken.value = ''
+    }
     return data
 }
-
+    
 const http = {
     get(url:string, option?: Omit<ICustomOption,'body'>| undefined){
         return request('GET', url, option)

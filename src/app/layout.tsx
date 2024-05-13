@@ -17,11 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const cookieStore = cookies();
-  const sessionToken = cookieStore.get("sessionToken");
+  const token = cookieStore.get("token");
   return (
     <html suppressHydrationWarning={true} lang="en">
       <body className="min-h-screen">
-        <AppProvider initSessiontoken = {sessionToken?.value}>
+        <AppProvider initSessiontoken = {token?.value}>
         {children}
         </AppProvider>
       
