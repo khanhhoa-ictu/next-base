@@ -1,12 +1,32 @@
 import configProject from "@/config";
-import { ICustomOption } from "@/types";
+import { ICustomOption, IEntityError } from "@/types";
 
-class HttpError extends Error {
+const ENTITY_ERROR_STATUS = 422
+  
+
+export class HttpError extends Error {
     status: number
-    payload: any
+    payload: {
+        message: string;
+        [key:string]: any
+    }
 
     constructor({status, payload}:{status:number, payload: any}){
         super("Http Error");
+        this.status = status;
+        this.payload = payload
+    }
+}
+
+export class EntityError extends HttpError {
+    status: number;
+    payload: IEntityError;
+
+    constructor({status, payload}:{status: number, payload:IEntityError}){
+        super({status, payload})
+        if(status !== 422){
+            throw new Error('EntityError must have status 422')
+        }
         this.status = status;
         this.payload = payload
     }
@@ -31,7 +51,8 @@ export const clientToken = new SessionToken()
 const request = async (method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, option?: ICustomOption | undefined) =>{
     const body = option?.body ? JSON.stringify(option.body) : undefined;
     const baseHeaders = {
-        "Content-Type": 'application/json'
+        "Content-Type": 'application/json',
+        Authorization: clientToken.value ? `Bearer ${clientToken.value}` : ''
     }
     const baseUrl = option?.baseUrl !== undefined  ? option?.baseUrl : configProject.NEXT_PUBLIC_ENDPOINT;
     const res = await fetch(`${baseUrl}/${url}`,{
@@ -51,7 +72,15 @@ const request = async (method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, o
     }
     
     if(!res?.ok){
-        throw new HttpError(data)
+        if(res.status === ENTITY_ERROR_STATUS){
+            throw new EntityError(data as unknown as {
+                status: number,
+                payload: IEntityError
+            })
+        }else{
+            throw new HttpError(data)
+        }
+        
     }
     if(['/auth/login'].includes(url)){
         clientToken.value = (payload as any).token

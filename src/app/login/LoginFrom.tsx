@@ -1,4 +1,5 @@
 'use client'
+import { handleErrorMessage } from '@/lib/utils'
 import { authApiRequest, login } from '@/service/auth'
 import { Button, Form, Input } from 'antd'
 import { useRouter } from 'next/navigation'
@@ -10,8 +11,8 @@ function LoginForm() {
         const data:any = await login(payload);
         await authApiRequest.authNextServer(data.payload)
         router.push('/')
-      } catch (error) {
-        console.log(error)
+      } catch (error:any) {
+        handleErrorMessage({error})
       }
     }
 
