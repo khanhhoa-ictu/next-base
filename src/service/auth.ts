@@ -9,5 +9,10 @@ export const authApiRequest ={
         return http.post('api/auth', body,{
             baseUrl:''
         })
+    },
+    logoutNextClientToNextServer:()=>{
+        return http.post('api/auth/logout', {},{
+            baseUrl:''
+        })
     }
 }

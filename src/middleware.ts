@@ -6,10 +6,10 @@ export function middleware(request: NextRequest) {
     const {pathname} = request.nextUrl
     const token = request.cookies.get('token');
 
-    if(pathname === '/about-me' &&  !token){
+    if(pathname === '/about-me' &&  !token?.value){
       return NextResponse.redirect(new URL('/login', request.url))
     }
-    if(token && (pathname === '/login' || pathname === 'register')){
+    if(token?.value && (pathname === '/login' || pathname === '/register')){
       return NextResponse.redirect(new URL('/', request.url))
     }
 }
