@@ -10,8 +10,10 @@ export const authApiRequest ={
             baseUrl:''
         })
     },
-    logoutNextClientToNextServer:()=>{
-        return http.post('api/auth/logout', {},{
+    logoutNextClientToNextServer:(force?: boolean)=>{
+        return http.post('api/auth/logout', {
+            force
+        },{
             baseUrl:''
         })
     }

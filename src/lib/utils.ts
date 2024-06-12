@@ -1,5 +1,7 @@
 import config from "@/config";
+import { IPayloadJWT } from "@/types";
 import { message } from "antd";
+import jwt from "jsonwebtoken";
 
 export const handleErrorMessage = (error: any) => {
     message.destroy();
@@ -12,4 +14,8 @@ export const handleErrorMessage = (error: any) => {
 
   export const normalizePath = (path:string) =>{
     return path.startsWith('/') ? path.slice(1) : path
+  }
+
+  export const decodeJWT = (token:string) =>{
+    return jwt.decode(token) as IPayloadJWT;
   }

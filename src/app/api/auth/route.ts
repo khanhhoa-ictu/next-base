@@ -1,3 +1,7 @@
+import { decodeJWT } from "@/lib/utils";
+import { IPayloadJWT } from "@/types";
+
+
 export async function POST(request: Request) {
   const res = await request.json();
   if (!res.token) {
@@ -8,20 +12,14 @@ export async function POST(request: Request) {
       }
     );
   }
-  interface newType{
-    status: number,
-    statusText: string,
-    headers: {
-        'Set-Cookie':string[]
-    }
-  }
-
+  const payload: IPayloadJWT = decodeJWT(res.token)
+  const expireDate = new Date(payload.exp * 1000).toUTCString()
   return (Response as any).json(res, {
     status: 200,
     statusText: "OK",
     headers:  {
       "Set-Cookie": [
-        `token=${res.token}; Path=/; HttpOnly`,
+        `token=${res.token}; Path=/; HttpOnly; Expires=${expireDate}`,
         `refreshToken=${res.refreshToken}; Path=/; HttpOnly`,
       ],
     },

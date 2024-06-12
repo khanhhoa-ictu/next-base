@@ -1,9 +1,10 @@
 import configProject from "@/config";
 import { ICustomOption, IEntityError } from "@/types";
 import { normalizePath } from "./utils";
+import { redirect } from "next/navigation";
 
 const ENTITY_ERROR_STATUS = 422;
-
+const AUTH_STATUS = 401
 export class HttpError extends Error {
   status: number;
   payload: {
@@ -61,6 +62,7 @@ const request = async (
     option?.baseUrl !== undefined
       ? option?.baseUrl
       : configProject.NEXT_PUBLIC_ENDPOINT;
+      console.log('url',`${baseUrl}/${url}`)
   const res = await fetch(`${baseUrl}/${url}`, {
     ...option,
     headers: {
@@ -76,6 +78,7 @@ const request = async (
     payload,
   };
 
+
   if (!res?.ok) {
     if (res.status === ENTITY_ERROR_STATUS) {
       throw new EntityError(
@@ -84,6 +87,30 @@ const request = async (
           payload: IEntityError;
         }
       );
+    } else if(res.status === AUTH_STATUS){
+      if(typeof window !== 'undefined'){
+        await fetch('/api/auth/logout',{
+          method:'POST',
+          body: JSON.stringify({force:true}),
+          headers: baseHeaders
+        })
+        clientToken.value = '';
+        location.href = '/login'
+      }else{
+        const token = (option?.headers as any)?.Authorization.split('Bearer ')[1];
+        console.log('token', token)
+        console.log('auth', (option?.headers as any))
+
+        redirect(`/logout/?token=${token}`)
+        // await fetch('/api/auth/logout',{
+        //   method:'POST',
+        //   body: JSON.stringify({force:true}),
+        //   headers: baseHeaders
+        // })
+        // console.log('zooooo')
+        // clientToken.value = '';
+        // location.href = '/login'
+      }
     } else {
       throw new HttpError(data);
     }

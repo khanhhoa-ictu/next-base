@@ -9,3 +9,9 @@ export interface IEntityError {
         message: string
     }[]
 }
+
+export interface IPayloadJWT {
+    iat: number,
+    exp: number,
+    username:string
+}
