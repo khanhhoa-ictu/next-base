@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     statusText: "OK",
     headers:  {
       "Set-Cookie": [
-        `token=${res.token}; Path=/; HttpOnly; Expires=${expireDate}`,
+        `token=${res.token}; Path=/; HttpOnly; `,
         `refreshToken=${res.refreshToken}; Path=/; HttpOnly`,
       ],
     },

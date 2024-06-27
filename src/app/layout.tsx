@@ -4,6 +4,7 @@ import "./globals.css";
 import AppProvider from "@/AppProvider";
 import { cookies } from "next/headers";
 import Navbar from "@/components/Navbar";
+import RefreshToken from "@/components/RefreshToken";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html suppressHydrationWarning={true} lang="en">
       <body className="min-h-screen">
         <Navbar/>
+        <RefreshToken/>
         <AppProvider initSessiontoken = {token?.value}>
         {children}
         </AppProvider>

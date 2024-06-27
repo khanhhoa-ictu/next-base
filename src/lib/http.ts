@@ -62,7 +62,6 @@ const request = async (
     option?.baseUrl !== undefined
       ? option?.baseUrl
       : configProject.NEXT_PUBLIC_ENDPOINT;
-      console.log('url',`${baseUrl}/${url}`)
   const res = await fetch(`${baseUrl}/${url}`, {
     ...option,
     headers: {
