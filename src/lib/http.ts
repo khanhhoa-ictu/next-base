@@ -1,7 +1,7 @@
-import configProject from "@/config";
 import { ICustomOption, IEntityError } from "@/types";
 import { normalizePath } from "./utils";
 import { redirect } from "next/navigation";
+import configProject from "@/config";
 
 const ENTITY_ERROR_STATUS = 422;
 const AUTH_STATUS = 401
