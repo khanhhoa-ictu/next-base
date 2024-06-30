@@ -1,4 +1,3 @@
-import { clientToken } from "@/lib/http";
 import { decodeJWT } from "@/lib/utils";
 import { refreshTokenToServer } from "@/service/accout";
 import { IPayloadJWT } from "@/types";
@@ -8,8 +7,6 @@ export async function POST() {
   const cookieStore = cookies();
   const refreshToken = cookieStore.get("refreshToken");
   const token = cookieStore.get("token");
-  console.log(token?.value);
-  console.log(refreshToken?.value);
 
   if (!refreshToken?.value || !token?.value) {
     return Response.json(

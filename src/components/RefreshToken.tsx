@@ -1,5 +1,4 @@
 "use client";
-import { clientToken } from "@/lib/http";
 import { decodeJWT, handleErrorMessage } from "@/lib/utils";
 import { refreshTokenToNextServer } from "@/service/accout";
 import { IPayloadJWT } from "@/types";
@@ -10,12 +9,16 @@ function RefreshToken() {
   useEffect(() => {
     const interval = setInterval(()=>{
       const now = new Date();
-      const payload: IPayloadJWT = decodeJWT(clientToken.value);
-      const expireDate = new Date(payload.exp * 1000);
-      const compare = (expireDate.getTime() - now.getTime()) / 86400000;
-      if(compare < 1){
-        handleRefresh()
+      const newToken = localStorage.getItem('token');
+      if(newToken){
+        const payload: IPayloadJWT = decodeJWT(newToken );
+        const expireDate = new Date(payload.exp * 1000);
+        const compare = (expireDate.getTime() - now.getTime()) / 86400000;
+        if(compare < 1){
+          handleRefresh()
+        }
       }
+     
     }, 1000 * 60 * 60 )
    
 
@@ -24,7 +27,7 @@ function RefreshToken() {
   const handleRefresh = async () => {
     try {
       const data:any = await refreshTokenToNextServer();
-      clientToken.value = data.payload.token
+      localStorage.setItem('token',data.payload.token)
     } catch (error) {
       handleErrorMessage({ error });
     }

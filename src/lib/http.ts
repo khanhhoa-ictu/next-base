@@ -33,20 +33,7 @@ export class EntityError extends HttpError {
   }
 }
 
-class SessionToken {
-  private token = "";
-  get value() {
-    return this.token;
-  }
-  set value(token) {
-    if (typeof window === "undefined") {
-      throw new Error("can not set token on sever side");
-    }
-    this.token = token;
-  }
-}
-
-export const clientToken = new SessionToken();
+export const isClient = typeof window !== 'undefined'
 
 const request = async (
   method: "GET" | "POST" | "PUT" | "DELETE",
@@ -56,8 +43,15 @@ const request = async (
   const body = option?.body ? JSON.stringify(option.body) : undefined;
   const baseHeaders = {
     "Content-Type": "application/json",
-    Authorization: clientToken.value ? `Bearer ${clientToken.value}` : "",
+    Authorization: "",
   };
+  if(isClient){
+    const token = localStorage.getItem('token');
+    if(token){
+      baseHeaders.Authorization = `Bearer ${token}`
+    }
+  }
+ 
   const baseUrl =
     option?.baseUrl !== undefined
       ? option?.baseUrl
@@ -87,13 +81,13 @@ const request = async (
         }
       );
     } else if(res.status === AUTH_STATUS){
-      if(typeof window !== 'undefined'){
+      if(isClient){
         await fetch('/api/auth/logout',{
           method:'POST',
           body: JSON.stringify({force:true}),
           headers: baseHeaders
         })
-        clientToken.value = '';
+        localStorage.removeItem('token')
         location.href = '/login'
       }else{
         const token = (option?.headers as any)?.Authorization.split('Bearer ')[1];
@@ -114,12 +108,12 @@ const request = async (
       throw new HttpError(data);
     }
   }
-  if (typeof window !== "undefined") {
+  if (isClient) {
     if (["/auth/login"].some((item)=>item === normalizePath(url))) {
-      clientToken.value = (payload as any).token;
+     localStorage.setItem('token', (payload as any).token)
     }
     if (["auth/logout"].some((item)=>item === normalizePath(url))) {
-      clientToken.value = "";
+      localStorage.removeItem('token')
     }
   }
 

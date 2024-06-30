@@ -1,10 +1,9 @@
+import AppProvider from "@/AppProvider";
+import Navbar from "@/components/Navbar";
+import RefreshToken from "@/components/RefreshToken";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import AppProvider from "@/AppProvider";
-import { cookies } from "next/headers";
-import Navbar from "@/components/Navbar";
-import RefreshToken from "@/components/RefreshToken";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,14 +17,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies();
-  const token = cookieStore.get("token");
   return (
     <html suppressHydrationWarning={true} lang="en">
       <body className="min-h-screen">
         <Navbar/>
         <RefreshToken/>
-        <AppProvider initSessiontoken = {token?.value}>
+        <AppProvider>
         {children}
         </AppProvider>
       

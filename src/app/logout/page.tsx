@@ -1,8 +1,7 @@
 'use client'
-import { clientToken } from '@/lib/http';
 import { authApiRequest } from '@/service/auth';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { Suspense, useEffect } from 'react'
 
 function Logout() {
     const router = useRouter();
@@ -19,7 +18,7 @@ function Logout() {
             }
              
         }
-        if(token === clientToken.value){
+        if(token === localStorage.getItem('token')){
             handleLogout()
         }
     },[token, router])
@@ -28,4 +27,8 @@ function Logout() {
   )
 }
 
-export default Logout
+export default function LogoutPage(){
+    <Suspense>
+        <Logout/>
+    </Suspense>
+}
