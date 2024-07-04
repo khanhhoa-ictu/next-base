@@ -22,7 +22,7 @@ export default function RootLayout({
     <html suppressHydrationWarning={true} lang="en">
       <body className="min-h-screen">
         <AntdRegistry>
-        <Navbar/>
+        {/* <Navbar/> */}
         <RefreshToken/>
         <AppProvider>
         {children}

@@ -33,9 +33,7 @@ function RefreshToken() {
     }
   };
   return (
-    <div>
-      <Button onClick={handleRefresh}>refresh</Button>
-    </div>
+   null
   );
 }
 
