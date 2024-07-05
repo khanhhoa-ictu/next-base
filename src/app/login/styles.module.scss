@@ -138,12 +138,13 @@
 }
 
 .formTitle {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
     padding-bottom: 16px;
     margin-left: -25px;
     margin-right: -25px;
-
+    align-items: center;
+    
     img {
         width: 80%;
         height: 100%;
