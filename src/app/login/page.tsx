@@ -6,7 +6,7 @@ import Image from 'next/image'
 import styles from './styles.module.scss'
 import logoLogin from "../../assets/login/login-1.svg";
 import RightDriver from './components/RightDriver'
-import logo from "@/assets/logo/logo.png";
+import logo from "@/assets/logo/logoLogin.png";
 
 function Login() {
   return (

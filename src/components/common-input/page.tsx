@@ -4,7 +4,7 @@ import React from "react";
 interface CommonInputProps {
   name: string;
   ruleMessage?: string;
-  className: string;
+  className?: string;
   placeholder?: string;
   maxLength: number;
   type?: string;

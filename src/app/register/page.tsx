@@ -2,7 +2,7 @@ import { Card, Row } from 'antd'
 import Image from 'next/image'
 import React from 'react'
 import styles from './styles.module.scss'
-import logo from "@/assets/logo/logo.png";
+import logo from "@/assets/logo/logoLogin.png";
 import FormSignUp from './components/FormSignUp';
 
 function Register() {

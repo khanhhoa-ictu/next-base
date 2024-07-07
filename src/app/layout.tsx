@@ -7,6 +7,8 @@ import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import styles from "./styles.module.scss";
 import Header from "@/components/header";
+import ConfigProvider from "antd/es/config-provider";
+import { configStyleComponent } from "@/lib/constants";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,19 +25,20 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning={true} lang="en">
       <body className="min-h-screen">
-        <div className={styles.pageWrapper}>
-          <div className={styles.mainWrapper}>
-          <Header />
-          <div className={styles.pageContent}>
-          <AntdRegistry>
-              {/* <Navbar/> */}
-              <RefreshToken />
-              <AppProvider>{children}</AppProvider>
-            </AntdRegistry>
+        <ConfigProvider theme={{ components:  configStyleComponent}}>
+          <div className={styles.pageWrapper}>
+            <div className={styles.mainWrapper}>
+              <Header />
+              <div className={styles.pageContent}>
+                <AntdRegistry>
+                  {/* <Navbar/> */}
+                  <RefreshToken />
+                  <AppProvider>{children}</AppProvider>
+                </AntdRegistry>
+              </div>
+            </div>
           </div>
-           
-          </div>
-        </div>
+        </ConfigProvider>
       </body>
     </html>
   );

@@ -8,11 +8,13 @@ import { Form, message } from 'antd'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import styles from './styles.module.scss'
+import { useState } from 'react'
 
 function LoginForm() {
   const router = useRouter()
-
+  const [loading,setLoading] = useState(false)
   const handleSubmit = async (payload: ILogin) => {
+    setLoading(true)
     const params = {
       username: payload.username,
       password: payload.password
@@ -32,11 +34,13 @@ function LoginForm() {
       router.push("/");
     } catch (error) {
       handleErrorMessage({error});
+    }finally{
+      setLoading(false)
     }
   };
 
   return (
-    <Form onFinish={handleSubmit} className={styles.formContainerItem}>
+    <Form onFinish={handleSubmit} className={styles.formContainer}>
     <CommonInput
       name="username"
       ruleMessage="Username không được để trống"
@@ -54,7 +58,7 @@ function LoginForm() {
       type="password"
     />
 
-    <CommonButtonSubmit className={styles.btnLogin} text="Đăng nhập" />
+    <CommonButtonSubmit className={styles.btnLogin} text="Đăng nhập" loading={loading} />
 
     <Form.Item labelCol={{ span: 24 }} className={styles.forgotPassword}>
       <Link href="/forgot-password">Quên mật khẩu</Link>

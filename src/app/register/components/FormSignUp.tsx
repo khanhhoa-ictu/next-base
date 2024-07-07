@@ -37,11 +37,10 @@ function FormSignUp() {
 
 
   return (
-    <Form onFinish={handleSubmit} className={styles.formContainer}>
+    <Form onFinish={handleSubmit}>
       <CommonInput
         name="username"
         ruleMessage="Username không được để trống"
-        className={styles.customInputSignUp}
         placeholder="Tên tài khoản"
         maxLength={50}
       />
@@ -49,7 +48,6 @@ function FormSignUp() {
       <CommonInput
         name="password"
         ruleMessage="password không được để trống"
-        className={styles.customInputSignUp}
         placeholder={"Mật khẩu"}
         maxLength={50}
         type="password"
