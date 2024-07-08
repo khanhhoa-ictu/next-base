@@ -31,7 +31,6 @@ export default function RootLayout({
               <Header />
               <div className={styles.pageContent}>
                 <AntdRegistry>
-                  {/* <Navbar/> */}
                   <RefreshToken />
                   <AppProvider>{children}</AppProvider>
                 </AntdRegistry>
