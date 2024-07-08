@@ -1,3 +1,4 @@
+import { isClient } from "@/lib/http";
 import { useEffect, useState } from "react";
 
 export default function useIsMobile() {
@@ -6,18 +7,19 @@ export default function useIsMobile() {
 
   const listenerScreen = () => {
     let isMobiles = true;
-    if (typeof window !== "undefined") {
-      isMobiles = window.innerWidth <= 600 ? true : false;
+    if (isClient) {
+      isMobiles = window.innerWidth <= 600;
     }
     setIsMobile(isMobiles)
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (isClient) {
       window.addEventListener("resize", listenerScreen);
+      setIsMobile(window.innerWidth <= 600)
     }
     return () => {
-      if (typeof window !== "undefined") {
+      if (isClient) {
         window.removeEventListener("resize", listenerScreen);
       }
     };

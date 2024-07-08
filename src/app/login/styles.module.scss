@@ -68,6 +68,11 @@
         margin-top: -5rem;
     }
 
+    @media screen and (max-width: 600px) {
+        transform: translateX(-50%);
+        margin-top: 0;
+    }
+
     .loginForm {
         box-shadow: rgba(190, 190, 190, 0.4) 0px 0px 7px;
         border-radius: 10px;

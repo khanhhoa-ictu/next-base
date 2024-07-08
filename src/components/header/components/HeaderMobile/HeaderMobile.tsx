@@ -1,9 +1,12 @@
+'use client'
 import React, { useEffect, useRef, useState } from "react";
 // import { NavLink, useHistory } from 'react-router-dom';
 import Link from "next/link";
 import useProfile from "@/hook/useProfile";
 import { CATEGORY } from "@/lib/constants";
 import styles from './styles.module.scss';
+import { isClient } from "@/lib/http";
+import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 
 function HeaderMobile() {
   const [showNav, setShowNav] = useState(false);
@@ -11,10 +14,11 @@ function HeaderMobile() {
   const toggleContainer = useRef<any>();
   const { profile } = useProfile();
   useEffect(() => {
+    if(!isClient) return;
     window.addEventListener("click", onClickOutsideHandler);
     return () => window.removeEventListener("click", onClickOutsideHandler);
   }, []);
-
+  
   const handleClick = (value?: number) => {
     if (!value) {
       setShowNav(false);
@@ -44,7 +48,7 @@ function HeaderMobile() {
       <div
         className={`${styles.mobiNavigation} ${showNav && styles.showNav }`}
       >
-        <nav className={styles.mobiMainNav}>
+        <div className={styles.mobiMainNav}>
           <ul>
             <li>
               <Link href="/" onClick={() => handleClick()}>
@@ -95,20 +99,20 @@ function HeaderMobile() {
               )}
             </li>
           </ul>
-        </nav>
+        </div>
         <div className={styles.circleContainer}>
           <div className={styles.circle}>
             <button
               className={`${styles.close} ${styles.btn}`}
               onClick={() => setShowNav(!showNav)}
             >
-              <i className="fas fa-times">x</i>
+              <CloseOutlined />
             </button>
             <button
               className={`${styles.open} ${styles.btn}`}
               onClick={() => setShowNav(!showNav)}
             >
-              <i className="fas fa-bars">c</i>
+              <MenuOutlined />
             </button>
           </div>
         </div>

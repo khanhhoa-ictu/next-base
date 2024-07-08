@@ -9,6 +9,7 @@ import ListMenu from "@/components/list-menu";
 import logo from '@/assets/logo/logo.png';
 import noAvatar from "@/assets/images/no-avatar.png";
 import { useRouter } from "next/navigation";
+import { isClient } from "@/lib/http";
 
 function HeaderDeskTop() {
   const router = useRouter();
@@ -17,7 +18,7 @@ function HeaderDeskTop() {
     // Cookies.remove("token");
     // Cookies.remove("refreshToken");
 
-    if (typeof window !== "undefined") {
+    if (isClient) {
       window.location.reload();
     }
   };
