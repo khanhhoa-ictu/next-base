@@ -1,3 +1,6 @@
+import uiDesign from "@/assets/images/ui-design.png"
+import webDesign from "@/assets/images/web_design.png"
+
 export const configStyleComponent = {
     Button: {
         colorPrimary: '#50c297',
@@ -21,3 +24,16 @@ export enum CATEGORY {
   JAVASCRIPT = 2,
   REACTJS = 1,
 }
+
+export const Roles = [
+  {
+    image: uiDesign,
+    title: 'UI Design',
+    description: 'Amela'
+  },
+  {
+    image: webDesign,
+    title: 'Frontend web',
+    description: ''
+  }
+]

@@ -1,0 +1,54 @@
+.aboutPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #57ca9fc7;
+}
+
+.aboutContainer {
+    width: 1000px;
+    // background-color: #e3e5ff;
+    background-color: transparent;
+
+    // border-radius: 12px;
+    height: 500px;
+    display: flex;
+    gap: 16px;
+
+    .aboutContact,
+    .aboutDetail {
+        padding: 20px 30px;
+        background-color: #e3e5ff;
+        border-radius: 12px;
+        width: 50%;
+    }
+
+    .aboutDetail {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background-color: transparent;
+        padding: 0;
+
+        .description,
+        .media {
+            height: 55%;
+            background-color: #e3e5ff;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .description {
+            height: 45%;
+
+            h1 {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+        }
+    }
+}
