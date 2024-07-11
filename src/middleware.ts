@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
     const {pathname} = request.nextUrl
     const token = request.cookies.get('token');
 
-    if(pathname === '/about-me' &&  !token?.value){
+    if(pathname === '/about' &&  !token?.value){
       return NextResponse.redirect(new URL('/login', request.url))
     }
     if(token?.value && (pathname === '/login' || pathname === '/register')){

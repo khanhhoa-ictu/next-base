@@ -2,6 +2,7 @@ import { Roles } from "@/lib/constants";
 import Profile from "./Profile";
 import styles from './styles.module.scss';
 import RoleItem from "./components/RoleItem";
+import { Button } from "antd";
 
 async function AboutMe() {
   return (
@@ -11,8 +12,10 @@ async function AboutMe() {
         <div className={styles.image}>
           
         </div>
-        <div className={styles.contact}></div>
-        <div className={styles.profile}></div>
+        <div className={styles.contact}>
+          <h1 className="text-lg font-bold">Lo Khanh Hoa</h1>
+          <p className="text-[#a5a5fc] text-base">kiara96.shippo@gmail.com</p>
+        </div>
       </div>
       <div className={styles.aboutDetail}>
         <div className={styles.description}>

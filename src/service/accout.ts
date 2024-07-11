@@ -1,6 +1,6 @@
 import http from "@/lib/http";
 
-export const getAccount = (id: any) => {
+export const getAccount = () => {
   return http.get(`about`);
 };
 

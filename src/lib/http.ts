@@ -59,7 +59,7 @@ const request = async (
   const res = await fetch(`${baseUrl}/${url}`, {
     ...option,
     headers: {
-      ...baseHeaders,
+      ...baseHeaders, 
       ...option?.headers,
     },
     body,
@@ -70,7 +70,7 @@ const request = async (
     status: res.status,
     payload,
   };
-
+  console.log(res.ok)
 
   if (!res?.ok) {
     if (res.status === ENTITY_ERROR_STATUS) {
@@ -91,23 +91,13 @@ const request = async (
         location.href = '/login'
       }else{
         const token = (option?.headers as any)?.Authorization.split('Bearer ')[1];
-        console.log('token', token)
-        console.log('auth', (option?.headers as any))
-
         redirect(`/logout/?token=${token}`)
-        // await fetch('/api/auth/logout',{
-        //   method:'POST',
-        //   body: JSON.stringify({force:true}),
-        //   headers: baseHeaders
-        // })
-        // console.log('zooooo')
-        // clientToken.value = '';
-        // location.href = '/login'
       }
     } else {
       throw new HttpError(data);
     }
   }
+
   if (isClient) {
     if (["/auth/login"].some((item)=>item === normalizePath(url))) {
      localStorage.setItem('token', (payload as any).token)

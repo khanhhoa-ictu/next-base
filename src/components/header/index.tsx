@@ -7,7 +7,6 @@ import HeaderDeskTop from "./components/HeaderDeskTop/HeaderDeskTop";
 
 export default function Header() {
   const { isMobile } = useMobile();
-  console.log(isMobile)
   return (
     <div className={styles.headerWrapper}>
       {isMobile ? <HeaderMobile /> : <HeaderDeskTop />}
