@@ -9,6 +9,7 @@ import styles from "./styles.module.scss";
 import Header from "@/components/header";
 import ConfigProvider from "antd/es/config-provider";
 import { configStyleComponent } from "@/lib/constants";
+import NavbarManager from "@/components/navbar-manager/NavbarManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className="min-h-screen">
         <ConfigProvider theme={{ components:  configStyleComponent}}>
           <div className={styles.pageWrapper}>
+            <NavbarManager/>
             <div className={styles.mainWrapper}>
               <Header />
               <div className={styles.pageContent}>

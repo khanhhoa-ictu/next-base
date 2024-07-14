@@ -4,7 +4,6 @@ import { IPayloadJWT } from "@/types";
 
 export async function POST(request: Request) {
   const res = await request.json();
-  console.log('',res)
   if (!res.token) {
     return Response.json(
       { message: "khong nhan duoc token" },

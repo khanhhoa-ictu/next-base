@@ -31,6 +31,7 @@ function LoginForm() {
     try {
       const data = await login(params);
       await authApiRequest.authNextServer(data.payload)
+      localStorage.setItem('token', (data.payload as any).token)
       router.push("/");
     } catch (error) {
       handleErrorMessage({error});

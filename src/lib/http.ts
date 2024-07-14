@@ -65,6 +65,7 @@ const request = async (
     body,
     method,
   });
+
   const payload: Response = await res.json();
   const data = {
     status: res.status,
@@ -98,14 +99,14 @@ const request = async (
     }
   }
 
-  if (isClient) {
-    if (["/auth/login"].some((item)=>item === normalizePath(url))) {
-     localStorage.setItem('token', (payload as any).token)
-    }
-    if (["auth/logout"].some((item)=>item === normalizePath(url))) {
-      localStorage.removeItem('token')
-    }
-  }
+  // if (isClient) {
+  //   if (["/auth/login"].some((item)=>item === normalizePath(url))) {
+  //    localStorage.setItem('token', (payload as any).token)
+  //   }
+  //   if (["auth/logout"].some((item)=>item === normalizePath(url))) {
+  //     localStorage.removeItem('token')
+  //   }
+  // }
 
   return data;
 };

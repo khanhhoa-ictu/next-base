@@ -33,3 +33,10 @@ export interface IDashCount {
     email: string;
     address: string;
   }
+
+  export interface IDashCount {
+    count: number;
+    title: string;
+    icon: any;
+    backgroundColor: string;
+  }
