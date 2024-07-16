@@ -1,15 +1,14 @@
 import AppProvider from "@/AppProvider";
-import Navbar from "@/components/Navbar";
+import Header from "@/components/header";
+import NavbarManager from "@/components/navbar-manager/NavbarManager";
 import RefreshToken from "@/components/RefreshToken";
+import { configStyleComponent } from "@/lib/constants";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import ConfigProvider from "antd/es/config-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
 import styles from "./styles.module.scss";
-import Header from "@/components/header";
-import ConfigProvider from "antd/es/config-provider";
-import { configStyleComponent } from "@/lib/constants";
-import NavbarManager from "@/components/navbar-manager/NavbarManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,19 +25,19 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning={true} lang="en">
       <body className="min-h-screen">
-        <ConfigProvider theme={{ components:  configStyleComponent}}>
-          <div className={styles.pageWrapper}>
-            <NavbarManager/>
-            <div className={styles.mainWrapper}>
-              <Header />
-              <div className={styles.pageContent}>
-                <AntdRegistry>
+        <ConfigProvider theme={{ components: configStyleComponent }}>
+          <AntdRegistry>
+            <div className={styles.pageWrapper}>
+              <NavbarManager />
+              <div className={styles.mainWrapper}>
+                <Header />
+                <div className={styles.pageContent}>
                   <RefreshToken />
                   <AppProvider>{children}</AppProvider>
-                </AntdRegistry>
+                </div>
               </div>
             </div>
-          </div>
+          </AntdRegistry>
         </ConfigProvider>
       </body>
     </html>

@@ -37,7 +37,7 @@ import DashCount from "./components/DashCount";
   
     return (
        
-        <div className="m-[40px] mt-[20px]">
+        <div className="m-[40px] mt-[20px] ml-[290px]">
           <div className="flex">
             {listDash.map((item: IDashCount, key) => {
               return <DashCount item={item} key={key} />;

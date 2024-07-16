@@ -65,7 +65,7 @@ function HeaderDeskTop() {
           </div>
         </div>
       ) : (
-        <Link href="/login">Login</Link>
+        <Link href="/manager">Login</Link>
       )}
     </div>
   );

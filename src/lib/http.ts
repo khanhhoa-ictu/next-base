@@ -71,7 +71,6 @@ const request = async (
     status: res.status,
     payload,
   };
-  console.log(res.ok)
 
   if (!res?.ok) {
     if (res.status === ENTITY_ERROR_STATUS) {
