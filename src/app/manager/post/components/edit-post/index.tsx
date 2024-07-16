@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { IPost } from "@/types/managerType";
 import styles from './styles.module.scss'
+import { getPostDetailAdmin } from "@/service/postDetail";
+import { handleErrorMessage } from "@/lib/utils";
 
 interface AddPostProps {
   isModalVisible: boolean;
@@ -34,8 +36,21 @@ function EditPost(props: AddPostProps) {
     handleOk(payload);
   };
 
+  useEffect(()=>{ 
+    const loadPostDetail = async() =>{
+      try {
+        const res =  await getPostDetailAdmin(id);
+        setData(res.payload)
+      } catch (error) {
+        handleErrorMessage(error)
+      }
+    }
+    loadPostDetail()
+  },[])
+
   useEffect(() => {
-    if (!data) return;
+    if (data.length <= 0) return;
+    console.log(data)
     form.setFieldsValue(data);
   }, [data]);
 

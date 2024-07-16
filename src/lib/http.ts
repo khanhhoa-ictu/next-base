@@ -131,10 +131,10 @@ const http = {
   },
   delete(
     url: string,
-    body: any,
+    // body: any,
     option?: Omit<ICustomOption, "body"> | undefined
   ) {
-    return request("DELETE", url, { ...option, body });
+    return request("DELETE", url, { ...option });
   },
 };
 

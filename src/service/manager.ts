@@ -16,3 +16,7 @@ export const getPostManager = (token: string) => {
 export const addPost = (data:IPost) =>{
   return http.post("manager/addPost", data);
 }
+
+export const deletePost = (id: number) => http.delete(`manager/delete/${id}`);
+
+export const editPost = (params: any) => http.put("manager/editPost", params);

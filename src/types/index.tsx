@@ -13,5 +13,6 @@ export interface IEntityError {
 export interface IPayloadJWT {
     iat: number,
     exp: number,
-    username:string
+    username:string,
+    role?: string
 }

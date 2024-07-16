@@ -1,3 +1,4 @@
+'use client'
 import { Modal } from "antd";
 import React from "react";
 import styles from "./styles.module.scss";
@@ -8,10 +9,11 @@ interface CustomModalProps {
   handleCancel: () => void;
   title: string;
   children?: React.ReactNode;
+  loading?: boolean;
 }
 
 function CustomModal(props: CustomModalProps) {
-  const { isOpen, handleOk, handleCancel, title, children } = props;
+  const { isOpen, handleOk, handleCancel, title, children, loading } = props;
   return (
     <Modal
       title={title}
@@ -23,6 +25,7 @@ function CustomModal(props: CustomModalProps) {
       cancelText={"Cancel"}
       okText={"OK"}
       centered
+      confirmLoading={loading}
     >
       {!!children && children}
     </Modal>
