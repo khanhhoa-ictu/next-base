@@ -18,7 +18,7 @@ function TablePost(props: TablePostProps) {
         </tr>
         
           {dataSource.map((item: any) => {
-            return <PostItem post={item} />;
+            return <PostItem post={item} key={item.title} />;
           })}
         </tbody>
       </table>

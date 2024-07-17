@@ -1,8 +1,8 @@
 import http from "@/lib/http";
 import { IPost } from "@/types/managerType";
 
-export const getAllPost = () => {
-  return http.get("post/getAllPost");
+export const getAllPost = (params:any) => {
+  return http.get(`getPost/${params.page}`);
 };
 
 export const getPostManager = (token: string) => {

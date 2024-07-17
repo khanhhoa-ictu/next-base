@@ -16,7 +16,7 @@ function TableUser(props: TablePostProps) {
           </tr>
 
           {dataSource.map((item: any) => {
-            return <UserItem user={item} />;
+            return <UserItem user={item} key={item.id} />;
           })}
         </tbody>
       </table>
