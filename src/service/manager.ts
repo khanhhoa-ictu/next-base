@@ -20,3 +20,9 @@ export const addPost = (data:IPost) =>{
 export const deletePost = (id: number) => http.delete(`manager/delete/${id}`);
 
 export const editPost = (params: any) => http.put("manager/editPost", params);
+
+//user 
+
+export const getUser = () => http.get("manager/user");
+
+export const deleteUser = (id: number) => http.delete(`manager/user/${id}`);
