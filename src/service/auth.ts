@@ -18,3 +18,5 @@ export const authApiRequest ={
         })
     }
 }
+
+export const getProfile = () => http.get("user/profile");
