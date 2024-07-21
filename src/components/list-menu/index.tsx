@@ -6,34 +6,13 @@ import Link from "next/link";
 import styles from './styles.module.scss'
 import { useRouter } from "next/navigation";
 import { usePathname } from 'next/navigation'
+import CustomModal from "../Modal/CustomModal";
 
 function ListMenu() {
   const router = useRouter();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const pathname = usePathname()
-//   const { setCategory } = useCategory();
-//   const { data } = useQuery("get-category", getListCategory);
-const [data, setData] = useState([])
-  const handleMenu = (value: number) => {
-    const newCategory = {
-      category: value,
-      page: 1,
-    };
-    // setCategory(newCategory);
-    if (location.pathname === "/article") return;
-    router.push("/article");
-  };
-
-  const menu = (
-    <Menu style={{ minWidth: 220 }}>
-      {data?.map((item: any, key: number) => (
-        <Menu.Item key={item?.id} onClick={() => handleMenu(item?.id)}>
-          {item.name_category}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
-
+ 
   const course = (
     <Menu style={{ minWidth: 220 }}>
       <Menu.Item key="1" onClick={() => setIsOpenModal(true)}>
@@ -59,20 +38,6 @@ const [data, setData] = useState([])
           </Link>
         </li>
         <li>
-          <div
-            className={classNames(
-              { [styles.active]: pathname === "/article" },
-              styles.menuWrapper
-            )}
-          >
-            <div className={styles.menuItem}>
-              <Dropdown overlay={menu} trigger={["click"]}>
-                <div>ARTICLES</div>
-              </Dropdown>
-            </div>
-          </div>
-        </li>
-        <li>
           <Link
             className={pathname == "/about" ? `${styles.active}` : ""}
             href="/about"
@@ -90,14 +55,14 @@ const [data, setData] = useState([])
           </div>
         </li>
       </ul>
-      {/* <CustomModal
+      <CustomModal
         isOpen={isOpenModal}
         handleOk={() => setIsOpenModal(false)}
         handleCancel={() => setIsOpenModal(false)}
         title={"Khóa học"}
       >
-        Khóa học sẽ được ra mắt vào tháng 8/2023{" "}
-      </CustomModal> */}
+        Khóa học sẽ được ra mắt vào tháng 9/2024
+      </CustomModal>
     </div>
   );
 }

@@ -38,8 +38,7 @@ function PostItem(props: PostItemProps) {
       await editPost(newData);
       setIsOpenModal({ ...isOpenModal, edit: false });
     } catch (error) {
-    console.log(error)
-    //   handleErrorMessage(error);
+      handleErrorMessage(error);
     }
   };
 

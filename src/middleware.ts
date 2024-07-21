@@ -10,7 +10,6 @@ export function middleware(request: NextRequest) {
   const payload: IPayloadJWT = decodeJWT(token?.value);
 
   if(payload?.role === "user" && pathname === "/manager") {
-    console.log('sao lai zo', payload?.role)
     return NextResponse.redirect(new URL("/", request.url));
   }
   if (pathname === "/manager" && !token?.value) {

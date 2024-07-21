@@ -8,6 +8,7 @@ export default function useProfile(enabled = false) {
     const loadProfile  = async()=>{
       try {
         const dataProfile = await getProfile();
+        console.log(dataProfile);
         setProfile(dataProfile.payload)
       } catch (error) {
         handleErrorMessage(error)

@@ -1,4 +1,5 @@
 'use client'
+import { handleErrorMessage } from '@/lib/utils'
 import { authApiRequest } from '@/service/auth'
 import { Button } from 'antd'
 import React from 'react'
@@ -8,7 +9,7 @@ function ButtonLogout() {
         try {
             await authApiRequest.logoutNextClientToNextServer()
         } catch (error) {
-            console.log(error)
+          handleErrorMessage(error)
         }
     }
   return (

@@ -3,17 +3,16 @@ import React, { useState } from 'react'
 import TextArea from 'antd/es/input/TextArea'
 import { Button, message } from 'antd';
 import { checkScript, handleErrorMessage } from '@/lib/utils';
-import useProfile from '@/hook/useProfile';
-import { IAddComment } from '@/types/Post';
+import { IAddComment } from '@/types/post';
 import { addComment } from '@/service/postDetail';
 import styles from '../styles.module.scss'
+import { useAppContext } from '@/AppProvider';
 interface CommentProps {
     postDetail?: any
 }
 function Comment(props: CommentProps) {
     const { postDetail } = props;
-    const {profile} = useProfile();
-    console.log(profile)
+    const {profile} = useAppContext()
     const [commentUser, setContentUser] = useState("");
     const handleSubmitComment = async () => {
         if (!postDetail?.id) return;
@@ -22,7 +21,6 @@ function Comment(props: CommentProps) {
           post_id: postDetail?.id,
           content: commentUser.trim(),
         };
-        console.log(newComment)
         if (checkScript(newComment.content)) {
           message.destroy();
           message.error("bình luận thất bại");
@@ -36,7 +34,6 @@ function Comment(props: CommentProps) {
         try {
           await addComment(newComment);
         } catch (error) {
-            console.log(error)
           handleErrorMessage(error);
         }
         setContentUser("");

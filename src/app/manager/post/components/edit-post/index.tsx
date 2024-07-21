@@ -50,7 +50,6 @@ function EditPost(props: AddPostProps) {
 
   useEffect(() => {
     if (data.length <= 0) return;
-    console.log(data)
     form.setFieldsValue(data);
   }, [data]);
 

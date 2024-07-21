@@ -2,17 +2,17 @@
 import React, { useEffect, useRef, useState } from "react";
 // import { NavLink, useHistory } from 'react-router-dom';
 import Link from "next/link";
-import useProfile from "@/hook/useProfile";
 import { CATEGORY } from "@/lib/constants";
 import styles from './styles.module.scss';
 import { isClient } from "@/lib/http";
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
+import { useAppContext } from "@/AppProvider";
 
 function HeaderMobile() {
   const [showNav, setShowNav] = useState(false);
   // const { setCategory } = useCategory();
   const toggleContainer = useRef<any>();
-  const { profile } = useProfile();
+  const {profile} = useAppContext()
   useEffect(() => {
     if(!isClient) return;
     window.addEventListener("click", onClickOutsideHandler);

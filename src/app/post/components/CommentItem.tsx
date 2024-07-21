@@ -20,11 +20,11 @@ import Image from "next/image";
 import CustomModal from "@/components/Modal/CustomModal";
 import { IComment } from "@/types/post";
 import moment from "moment";
-import useProfile from "@/hook/useProfile";
 import { handleErrorMessage, replaceURLs } from "@/lib/utils";
 import { deleteComment } from "@/service/postDetail";
 import styles from "./styles.module.scss"
 import { useRouter } from "next/navigation";
+import { useAppContext } from "@/AppProvider";
 
 interface CommentProps {
   item: IComment;
@@ -32,11 +32,10 @@ interface CommentProps {
 function CommentItem(props: CommentProps) {
   const router = useRouter();
   const { item } = props;
-  console.log(item)
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [reply, setReply] = useState("");
   const [isReply, setIsReply] = useState(false);
-  const { profile } = useProfile();
+  const {profile} = useAppContext()
 //   const queryClient = useQueryClient();
 const handleDeleteComment = async (id: number) => {
     try {

@@ -4,12 +4,12 @@ import React from "react";
 import Link from "next/link";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import useProfile from "@/hook/useProfile";
 import ListMenu from "@/components/list-menu";
 import logo from '@/assets/logo/logo.png';
 import noAvatar from "@/assets/images/no-avatar.png";
 import { useRouter } from "next/navigation";
 import { isClient } from "@/lib/http";
+import { useAppContext } from "@/AppProvider";
 
 function HeaderDeskTop() {
   const router = useRouter();
@@ -22,7 +22,8 @@ function HeaderDeskTop() {
       window.location.reload();
     }
   };
-  const { profile } = useProfile();
+  const {profile} = useAppContext()
+  console.log(profile)
   const menu = (
     <Menu style={{ minWidth: 220 }}>
       <Menu.Item key="1" onClick={() => router.push(`/profile/${profile.id}`)}>

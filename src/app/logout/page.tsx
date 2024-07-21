@@ -1,4 +1,5 @@
 'use client'
+import { handleErrorMessage } from '@/lib/utils';
 import { authApiRequest } from '@/service/auth';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { Suspense, useEffect } from 'react'
@@ -14,7 +15,7 @@ function Logout() {
                 await authApiRequest.logoutNextClientToNextServer(true);
                 router.push('/login')
             } catch (error) {
-                console.log(error)
+                handleErrorMessage(error)
             }
              
         }

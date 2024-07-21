@@ -9,6 +9,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import styles from "./styles.module.scss";
+import { Suspense } from "react";
+import Loading from "@/components/loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,16 +29,19 @@ export default function RootLayout({
       <body className="min-h-screen">
         <ConfigProvider theme={{ components: configStyleComponent }}>
           <AntdRegistry>
+          <AppProvider>
+            
             <div className={styles.pageWrapper}>
               <NavbarManager />
               <div className={styles.mainWrapper}>
                 <Header />
                 <div className={styles.pageContent}>
                   <RefreshToken />
-                  <AppProvider>{children}</AppProvider>
+                  {children}
                 </div>
               </div>
             </div>
+            </AppProvider>
           </AntdRegistry>
         </ConfigProvider>
       </body>

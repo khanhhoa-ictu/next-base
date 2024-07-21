@@ -30,7 +30,6 @@ function AddPost() {
       await addPost(payload);
       setIsModalVisible(false);
     } catch (error) {
-      console.log(error)
       handleErrorMessage(error);
     }
   };
