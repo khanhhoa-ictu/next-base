@@ -8,7 +8,7 @@ const initPage = {
   page: 1,
 };
 async function Home() {
-  const ListAllPost: any = await getAllPost({ page: 1 });
+  // const ListAllPost: any = await getAllPost({ page: 1 });
   // console.log(ListAllPost)
   // const handleChangePage = (page: number, pageSize: number) => {
   //   const newPage = {
@@ -25,11 +25,11 @@ async function Home() {
         
         <div className={styles.articleContainer}>
        
-          <div className="mt-[40px]">
+          {/* <div className="mt-[40px]">
             {ListAllPost.payload?.listPost.map((item: IPost) => (
               <HomeItem item={item} key={item?.id} />
             ))}
-          </div>
+          </div> */}
         </div>
         <div className={styles.pagination}>
           {/* {listPostAll.length ==0 ? null : (

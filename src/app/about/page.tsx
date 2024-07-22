@@ -1,46 +1,67 @@
-import { Roles } from "@/lib/constants";
-import Profile from "./Profile";
-import styles from './styles.module.scss';
-import RoleItem from "./components/RoleItem";
-import { Button } from "antd";
+import {
+  FacebookOutlined,
+  InstagramOutlined,
+  LinkedinOutlined,
+  YoutubeOutlined,
+} from "@ant-design/icons";
+import Loading from "../../components/loading";
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import styles from './styles.module.scss'
 
-async function AboutMe() {
+function AboutMe() {
+  const about = {
+    thumbnail: 'https://res.cloudinary.com/smile159/image/upload/v1642153205/ghnqckvl0qmrphsoixb0.jpg',
+    title: 'title',
+    content: 'content',
+    facebook: 'https://www.facebook.com/khanh.hoa.3998263/',
+    instal: 'https://www.instagram.com/khanh.hoa.3998263/',
+    youtube: 'https://www.youtube.com/channel/UC1-11-11-11-11-11',
+    linkedin: 'https://www.linkedin.com/in/khanh-hoa-010a00199'
+  }
   return (
-    <div className={styles.aboutPage}>
-    <div className={styles.aboutContainer}>
-      <div className={styles.aboutContact}>
-        <div className={styles.image}>
-          
-        </div>
-        <div className={styles.contact}>
-          <h1 className="text-lg font-bold">Lo Khanh Hoa</h1>
-          <p className="text-[#a5a5fc] text-base">kiara96.shippo@gmail.com</p>
-        </div>
-      </div>
-      <div className={styles.aboutDetail}>
-        <div className={styles.description}>
-          <h1>About Me</h1>
-          <div className="flex gap-[6px] flex-col">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae cupiditate reprehenderit vitae officia tempora</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque modi tempora placeat ab ipsum similique dolores vitae, unde corporis, accusamus quos!</p>
-          </div>
-        
-        </div>
-        <div className={styles.media}>
-          <div className={styles.role}>
-            <h3 className="text-lg font-bold mb-3">Last Roles</h3>
-            <div className="flex flex-col gap-2">
-              {
-                Roles.map((item)=> <RoleItem role={item}/>)
-              }
+    <>
+      {/* <Particle /> */}
+      <div className={styles.container}>
+        <div className={styles.aboutInner}>
+          <div className={styles.aboutContent}>
+            <div className={styles.thumb}>
+              <Image src={about?.thumbnail} alt="" width={370} height={500} />
+            </div>
+            <div className={styles.textContent}>
+              <h3>{about?.title}</h3>
+              <div className={styles.aboutBio}>
+                <p>{about?.content}</p>
+              </div>
+
+              <ul className={styles.aboutSocial}>
+                <li>
+                  <Link href={{ pathname: about.facebook }} target={"_blank"}>
+                    <FacebookOutlined />
+                  </Link>
+                </li>
+                <li>
+                  <Link href={{ pathname: about.instal }} target={"_blank"}>
+                    <InstagramOutlined />
+                  </Link>
+                </li>
+                <li>
+                  <Link href={{ pathname: about.youtube }} target={"_blank"}>
+                    <YoutubeOutlined />
+                  </Link>
+                </li>
+                <li>
+                  <Link href={{ pathname: about.linkedin }} target={"_blank"}>
+                    <LinkedinOutlined />
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
-          <div className={styles.mediaLink}></div>
         </div>
       </div>
-     
-    </div>
-    </div>
+    </>
   );
 }
 

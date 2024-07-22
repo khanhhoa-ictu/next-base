@@ -4,18 +4,17 @@
 
     :global {
         .ant-modal-content {
-            border-radius: 10px;
+            border-radius: 10px !important;
         }
 
         .ant-modal-header {
-            border-bottom: none;
-            border-radius: 10px 10px 0 0;
+            border-bottom: none !important;
+            border-radius: 10px 10px 0 0 !important;
         }
 
         .ant-modal-footer {
-            border-top: none;
-            text-align: center;
-            padding-bottom: 20px;
+            border-top: none !important;
+            text-align: center !important;
 
             .ant-btn {
                 width: 130px;
@@ -24,15 +23,15 @@
             }
 
             .ant-btn-primary {
-                background-color: #3b65e2;
+                background-color: #50c297;
                 color: #fff;
                 font-weight: bold;
                 font-size: 12px;
             }
 
             .ant-btn-default {
-                border: 1px solid #3b65e2;
-                color: #3b65e2;
+                border: 1px solid #50c297;
+                color: #50c297;
                 font-weight: bold;
                 font-size: 12px;
             }
@@ -49,8 +48,8 @@
         }
 
         .ant-modal-body {
-            text-align: center;
-            padding: 10px 24px 30px 24px;
+            text-align: center !important;
+            padding: 10px 24px 30px 24px !important;
 
             textarea.ant-input {
                 min-height: 250px;
