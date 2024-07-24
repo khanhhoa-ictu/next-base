@@ -23,26 +23,17 @@ export async function POST() {
     );
     const payload: IPayloadJWT = decodeJWT(res.payload.token);
     const expireDate = new Date(payload.exp * 1000).toUTCString();
-    // clientToken.value = res.payload.token;
     return (Response as any).json(res.payload, {
       status: 200,
       statusText: "OK",
-      headers: {
-        "Set-Cookie": `token=${res.payload.token}; Path=/; HttpOnly; Expires=${expireDate}`,
+      headers:  {
+        "Set-Cookie": [
+          `token=${res.payload.token}; Path=/; HttpOnly; Expires=${expireDate}`,
+          `refreshToken=${res.payload.refreshToken}; Path=/; HttpOnly`,
+        ],
       },
     });
   } catch (error) {
-    console.log(error);
+    return Response.json({message: "phiên đăng nhập hết hạn"})
   }
-
-  // return (Response as any).json('res', {
-  //   status: 200,
-  //   statusText: "OK",
-  //   headers:  {
-  //     "Set-Cookie": [
-  //       `token=${res.token}; Path=/; HttpOnly; Expires=${expireDate}`,
-  //       `refreshToken=${res.refreshToken}; Path=/; HttpOnly`,
-  //     ],
-  //   },
-  // });
 }

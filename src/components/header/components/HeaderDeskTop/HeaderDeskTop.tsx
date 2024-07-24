@@ -8,19 +8,22 @@ import ListMenu from "@/components/list-menu";
 import logo from '@/assets/logo/logo.png';
 import noAvatar from "@/assets/images/no-avatar.png";
 import { useRouter } from "next/navigation";
-import { isClient } from "@/lib/http";
 import { useAppContext } from "@/AppProvider";
+import { authApiRequest } from "@/service/auth";
+import { handleErrorMessage } from "@/lib/utils";
 
 function HeaderDeskTop() {
   const router = useRouter();
 
-  const logout = () => {
-    // Cookies.remove("token");
-    // Cookies.remove("refreshToken");
-
-    if (isClient) {
-      window.location.reload();
+  const logout = async() => {
+    try {
+      await authApiRequest.logoutNextClientToNextServer(true);
+      localStorage.removeItem('token')
+      router.push('/login')
+    } catch (error) {
+      handleErrorMessage(error)
     }
+    
   };
   const {profile} = useAppContext()
   const menu = (

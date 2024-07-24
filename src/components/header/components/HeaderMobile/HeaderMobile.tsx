@@ -7,10 +7,13 @@ import styles from './styles.module.scss';
 import { isClient } from "@/lib/http";
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 import { useAppContext } from "@/AppProvider";
+import { authApiRequest } from "@/service/auth";
+import { handleErrorMessage } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 function HeaderMobile() {
   const [showNav, setShowNav] = useState(false);
-  // const { setCategory } = useCategory();
+  const router = useRouter()
   const toggleContainer = useRef<any>();
   const {profile} = useAppContext()
   useEffect(() => {
@@ -39,8 +42,14 @@ function HeaderMobile() {
     }
   };
 
-  const handleLogout = () => {
-    // window.location.reload();
+  const handleLogout = async() => {
+    try {
+      await authApiRequest.logoutNextClientToNextServer(true);
+      localStorage.removeItem('token')
+      router.push('/login')
+    } catch (error) {
+      handleErrorMessage(error)
+    }
   };
 
   return (

@@ -1,3 +1,4 @@
+'use client'
 import { handleErrorMessage } from "@/lib/utils";
 import { getProfile } from "@/service/auth";
 import { useEffect, useState } from "react";
