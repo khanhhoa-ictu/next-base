@@ -2,8 +2,7 @@
 import { decodeJWT, handleErrorMessage } from "@/lib/utils";
 import { refreshTokenToNextServer } from "@/service/accout";
 import { IPayloadJWT } from "@/types";
-import { Button } from "antd";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 function RefreshToken() {
   useEffect(() => {

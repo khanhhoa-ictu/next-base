@@ -1,67 +1,63 @@
+import { getAccount } from "@/service/accout";
 import {
   FacebookOutlined,
   InstagramOutlined,
   LinkedinOutlined,
   YoutubeOutlined,
 } from "@ant-design/icons";
-import Loading from "../../components/loading";
-import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import styles from './styles.module.scss'
 
-function AboutMe() {
-  const about = {
-    thumbnail: 'https://res.cloudinary.com/smile159/image/upload/v1642153205/ghnqckvl0qmrphsoixb0.jpg',
-    title: 'title',
-    content: 'content',
-    facebook: 'https://www.facebook.com/khanh.hoa.3998263/',
-    instal: 'https://www.instagram.com/khanh.hoa.3998263/',
-    youtube: 'https://www.youtube.com/channel/UC1-11-11-11-11-11',
-    linkedin: 'https://www.linkedin.com/in/khanh-hoa-010a00199'
-  }
+async function AboutMe() {
+  const {payload:about}:any = await getAccount()
   return (
-    <>
-      {/* <Particle /> */}
-      <div className={styles.container}>
-        <div className={styles.aboutInner}>
-          <div className={styles.aboutContent}>
-            <div className={styles.thumb}>
-              <Image src={about?.thumbnail} alt="" width={370} height={500} />
-            </div>
-            <div className={styles.textContent}>
-              <h3>{about?.title}</h3>
-              <div className={styles.aboutBio}>
-                <p>{about?.content}</p>
-              </div>
-
-              <ul className={styles.aboutSocial}>
-                <li>
-                  <Link href={{ pathname: about.facebook }} target={"_blank"}>
-                    <FacebookOutlined />
-                  </Link>
-                </li>
-                <li>
-                  <Link href={{ pathname: about.instal }} target={"_blank"}>
-                    <InstagramOutlined />
-                  </Link>
-                </li>
-                <li>
-                  <Link href={{ pathname: about.youtube }} target={"_blank"}>
-                    <YoutubeOutlined />
-                  </Link>
-                </li>
-                <li>
-                  <Link href={{ pathname: about.linkedin }} target={"_blank"}>
-                    <LinkedinOutlined />
-                  </Link>
-                </li>
-              </ul>
-            </div>
+    <div className="p-[85px] pt-[45px]">
+      <h1 className="text-5xl font-bold text-black mb-6 px-3">Our Mission</h1>
+      <div className="flex text-left w-full gap-2">
+        <div className="basis-[60%] px-3">
+          <div>
+            <h2 className="text-[32px] text-[#50c297] mb-4 mt-10">
+              {about.title}
+            </h2>
+            <p className="text-base text-gray-700 leading-relaxed mb-4">
+              {about.content}
+            </p>
+          </div>
+          <div className="flex justify-end">
+            <ul className="flex gap-4">
+              <li className="cursor-pointer list-none">
+                <Link className="text-[24px] text-[#333] hover:opacity-60" href={{ pathname: about.facebook }} target={"_blank"}>
+                  <FacebookOutlined />
+                </Link>
+              </li>
+              <li className="cursor-pointer list-none">
+                <Link className="text-[24px] text-[#333] hover:opacity-60" href={{ pathname: about.instal }} target={"_blank"}>
+                  <InstagramOutlined />
+                </Link>
+              </li>
+              <li className="cursor-pointer list-none">
+                <Link className="text-[24px] text-[#333] hover:opacity-60" href={{ pathname: about.youtube }} target={"_blank"}>
+                  <YoutubeOutlined />
+                </Link>
+              </li>
+              <li className="cursor-pointer list-none">
+                <Link className="text-[24px] text-[#333] hover:opacity-60" href={{ pathname: about.linkedin }} target={"_blank"}>
+                  <LinkedinOutlined />
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="basis-[40%] shrink-0 px-3 flex justify-center">
+          <div className="w-[400px] h-[400px]">
+            <img
+              src={about.thumbnail}
+              alt="Our Mission"
+              className="w-full h-full rounded-full object-cover"
+            />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

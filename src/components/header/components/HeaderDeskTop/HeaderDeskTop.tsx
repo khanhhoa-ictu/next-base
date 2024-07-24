@@ -23,7 +23,6 @@ function HeaderDeskTop() {
     }
   };
   const {profile} = useAppContext()
-  console.log(profile)
   const menu = (
     <Menu style={{ minWidth: 220 }}>
       <Menu.Item key="1" onClick={() => router.push(`/profile/${profile.id}`)}>
