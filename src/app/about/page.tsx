@@ -6,6 +6,8 @@ import {
   YoutubeOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
+import AboutImage from "@/assets/images/aboutImage.jpg"
+import Image from "next/image";
 
 async function AboutMe() {
   const {payload:about}:any = await getAccount()
@@ -49,8 +51,8 @@ async function AboutMe() {
         </div>
         <div className="basis-[40%] shrink-0 px-3 flex justify-center">
           <div className="w-[400px] h-[400px]">
-            <img
-              src={about.thumbnail}
+            <Image
+              src={AboutImage}
               alt="Our Mission"
               className="w-full h-full rounded-full object-cover"
             />

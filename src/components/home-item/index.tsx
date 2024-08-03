@@ -19,15 +19,15 @@ function HomeItem(props: HomeItemProps) {
   return (
     <div className={styles.articleItem}>
       <div className={styles.postImg}>
-        {/* <Link href={`/post/${item.slug}`} className={styles.navLink}> */}
+        <Link href={`/post/${item.slug}`} className={styles.navLink}>
           <Image src={item.thumbnail} alt="" width={1280} height={680} />
-        {/* </Link> */}
+        </Link>
       </div>
       <div className={styles.postContent}>
         <div className={styles.title}>
-          {/* <Link href={`/post/${item.slug}`} className={styles.navLinkContent}> */}
+          <Link href={`/post/${item.slug}`} className={styles.navLinkContent}>
             <h3> {item.title} </h3>
-          {/* </Link> */}
+          </Link>
           <div className={styles.date}>
             <div className={styles.dateItem}>
               <p>Smile</p>
