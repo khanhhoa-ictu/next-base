@@ -17,9 +17,8 @@ function customUploadAdapter(loader: any) {
       data.append("file-image", file);
 
       const response:any = await uploadImagePost(data);
-
       return {
-        default: response.url,
+        default: response.payload.url,
       };
     },
   };
