@@ -34,7 +34,7 @@ function LoginForm() {
       localStorage.setItem('token', (data.payload as any).token)
       router.push("/");
     } catch (error) {
-      handleErrorMessage({error});
+      handleErrorMessage(error);
     }finally{
       setLoading(false)
     }

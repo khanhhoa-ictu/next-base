@@ -34,7 +34,7 @@ function RefreshToken() {
     } catch (error) {
       await authApiRequest.logoutNextClientToNextServer(true);
       router.push('/login')
-      handleErrorMessage({ error });
+      handleErrorMessage( error );
     }
   };
   return (

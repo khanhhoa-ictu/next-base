@@ -1,16 +1,9 @@
-import { Button, Table } from "antd";
 
-import { useState } from "react";
-import { IPost } from "@/types/managerType";
-import styles from "./style.module.scss";
-import { handleErrorMessage } from "@/lib/utils";
-import CustomModal from "@/components/Modal/CustomModal";
-import Loading from "@/components/loading";
-import AddPost from "./components/add-post";
-import EditPost from "./components/edit-post";
 import { getPostManager } from "@/service/manager";
 import { cookies } from "next/headers";
+import AddPost from "./components/add-post";
 import TablePost from "./components/table-post";
+import styles from "./style.module.scss";
 
 async function PostManager() {
   const cookieStore = cookies();

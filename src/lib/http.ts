@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import configProject from "@/config";
 
 const ENTITY_ERROR_STATUS = 422;
-const AUTH_STATUS = 401
+const AUTH_STATUS = 401;
 export class HttpError extends Error {
   status: number;
   payload: {
@@ -33,25 +33,35 @@ export class EntityError extends HttpError {
   }
 }
 
-export const isClient = typeof window !== 'undefined'
+export const isClient = typeof window !== "undefined";
 
 const request = async (
   method: "GET" | "POST" | "PUT" | "DELETE",
   url: string,
   option?: ICustomOption | undefined
 ) => {
-  const body = option?.body ? JSON.stringify(option.body) : undefined;
-  const baseHeaders = {
-    "Content-Type": "application/json",
-    Authorization: "",
-  };
-  if(isClient){
-    const token = localStorage.getItem('token');
-    if(token){
-      baseHeaders.Authorization = `Bearer ${token}`
+  const body = option?.body
+    ? option?.body instanceof FormData
+      ? option?.body
+      : JSON.stringify(option.body)
+    : undefined;
+
+  const baseHeaders =
+    option?.body instanceof FormData
+      ? {
+          Authorization: "",
+        }
+      : {
+          "Content-Type": "application/json",
+          Authorization: "",
+        };
+  if (isClient) {
+    const token = localStorage.getItem("token");
+    if (token) {
+      baseHeaders.Authorization = `Bearer ${token}`;
     }
   }
- 
+
   const baseUrl =
     option?.baseUrl !== undefined
       ? option?.baseUrl
@@ -59,9 +69,9 @@ const request = async (
   const res = await fetch(`${baseUrl}/${url}`, {
     ...option,
     headers: {
-      ...baseHeaders, 
+      ...baseHeaders,
       ...option?.headers,
-    },
+    } as any,
     body,
     method,
   });
@@ -78,18 +88,20 @@ const request = async (
           payload: IEntityError;
         }
       );
-    } else if(res.status === AUTH_STATUS){
-      if(isClient){
-        await fetch('/api/auth/logout',{
-          method:'POST',
-          body: JSON.stringify({force:true}),
-          headers: baseHeaders
-        })
-        localStorage.removeItem('token')
-        location.href = '/login'
-      }else{
-        const token = (option?.headers as any)?.Authorization.split('Bearer ')[1];
-        redirect(`/logout/?token=${token}`)
+    } else if (res.status === AUTH_STATUS) {
+      if (isClient) {
+        await fetch("/api/auth/logout", {
+          method: "POST",
+          body: JSON.stringify({ force: true }),
+          headers: baseHeaders as any,
+        });
+        localStorage.removeItem("token");
+        location.href = "/login";
+      } else {
+        const token = (option?.headers as any)?.Authorization.split(
+          "Bearer "
+        )[1];
+        redirect(`/logout/?token=${token}`);
       }
     } else {
       throw new HttpError(data);

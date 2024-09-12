@@ -17,6 +17,7 @@ function AddPost() {
   const [form] = useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const onChangeEditor = (event: any, editor: any) => {
+
     const data = editor.getData();
     form.setFieldsValue({
       content: data,

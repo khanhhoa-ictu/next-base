@@ -31,7 +31,7 @@ function FormSignUp() {
         //   message.success("Đăng ký thành công");
         //   router.push("/login");
         } catch (error) {
-          handleErrorMessage({error});
+          handleErrorMessage(error);
         }
       };
 

@@ -51,3 +51,4 @@ export const handleErrorMessage = (error: any) => {
       );
     });
   };
+  export const imgMaxSize = 5000000;
