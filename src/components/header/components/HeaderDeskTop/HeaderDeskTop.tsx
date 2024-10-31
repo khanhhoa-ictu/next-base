@@ -50,7 +50,8 @@ function HeaderDeskTop() {
         </Link>
       </div>
       <ListMenu />
-      {profile ? (
+      {profile?.role ? (
+        
         <div className={styles.headerControl}>
           <div className={styles.menuWrapperControl}>
             <div className={styles.menuControlItem}>

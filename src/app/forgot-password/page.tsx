@@ -6,7 +6,7 @@ import Loading from "@/components/loading";
 import Request from "./components/request/Request";
 import Verify from "./components/verify/Verify";
 import Forgot from "./components/forgot/Forgot";
-
+import { requestPassword } from "@/service/forgot-password";
 function ForgotPassword() {
   const [statusForgot, setStatusForgot] = useState("forgot");
   const [email, setEmail] = useState("");
@@ -17,7 +17,7 @@ function ForgotPassword() {
     };
     try {
       setLoading(true);
-      //   await requestPassword(newEmail);
+      await requestPassword(newEmail);
       setStatusForgot("checkOTP");
     } catch (error) {
       handleErrorMessage(error);

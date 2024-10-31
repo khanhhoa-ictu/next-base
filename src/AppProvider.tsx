@@ -1,5 +1,6 @@
 'use client'
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import React, { createContext, useContext } from "react";
 import useProfile from "./hook/useProfile";
 
 const AppContext = createContext <any> ({
@@ -13,13 +14,9 @@ export const useAppContext = () =>{
 }
 
 export default function AppProvider({ children}: { children: React.ReactNode }) {
-    const {profile} = useProfile()
-    // const [user, setUser] = useState('')
-    // useEffect(()=>{
-    //   if(profile){
-    //     setUser(profile)
-    //   }
-    // },[profile])
+  const pathname = usePathname()
+  const isLoginPage = pathname === '/login';
+    const {profile} = useProfile(isLoginPage)
     return (
       <AppContext.Provider value={{profile}}>
         {children}

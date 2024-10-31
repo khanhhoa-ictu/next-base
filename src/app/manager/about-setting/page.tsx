@@ -25,7 +25,6 @@ import noAvatar from '@/assets/images/no-avatar.png'
       await getEditAbout(payload);
       message.success("thay đổi thông tin thành công");
     } catch (error) {
-        console.log(error)
       handleErrorMessage(error);
     } finally {
       setLoading(false);
@@ -47,7 +46,6 @@ import noAvatar from '@/assets/images/no-avatar.png'
     }
     let data = new FormData();
     data.append("file", event.target.files[0]);
-    console.log('data',data)
     if (!event.target.files[0]) return;
     try {
       setLoading(true);

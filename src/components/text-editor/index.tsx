@@ -2,6 +2,11 @@
 import React from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Image from '@ckeditor/ckeditor5-image/src/image';
+import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
+import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar';
+import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
+import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
 import styles from "./styles.module.scss";
 import { uploadImagePost } from "@/service/manager";
 
@@ -37,6 +42,19 @@ function TextEditor({ onChange, data }: TextEditorProps) {
         editor={ClassicEditor as any}
         config={{
           extraPlugins: [uploadPlugin],
+          image: {
+            toolbar: [
+              'imageTextAlternative', // Thêm mô tả thay thế cho hình ảnh
+              'imageStyle:full', 
+              'imageStyle:side', 
+              '|',
+              'resizeImage:25',  // Tùy chọn resize 25%
+              'resizeImage:50',  // Tùy chọn resize 50%
+              'resizeImage:75',  // Tùy chọn resize 75%
+              'resizeImage:original' // Tùy chọn resize về kích thước gốc
+            ],
+            resizeUnit: 'px', // Đơn vị resize (px hoặc %)
+          },
           toolbar: [
             "undo",
             "redo",

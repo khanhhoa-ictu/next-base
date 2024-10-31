@@ -20,3 +20,5 @@ export const authApiRequest ={
 }
 
 export const getProfile = () => http.get("user/profile");
+
+export const register = (params:any) => http.post("register", params)

@@ -9,7 +9,6 @@ const initPage = {
 };
 async function Home() {
   const ListAllPost: any = await getAllPost({ page: 1 });
-  // console.log(ListAllPost)
   // const handleChangePage = (page: number, pageSize: number) => {
   //   const newPage = {
   //     page,

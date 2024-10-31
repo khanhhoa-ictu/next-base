@@ -1,40 +1,48 @@
-'use client'
+"use client";
 import { Form, Input, Button, message } from "antd";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import CommonInput from "@/components/common-input/page";
 import { ISignUp } from "@/types/auth";
 import { handleErrorMessage } from "@/lib/utils";
+import { register } from "@/service/auth";
+import { useRouter } from "next/navigation";
 
 function FormSignUp() {
-    const handleSubmit = async (payload: ISignUp) => {
-        const params = {
-            username: payload.username,
-            password: payload.password,
-            confirm: payload.confirm,
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async (payload: ISignUp) => {
+    setLoading(true);
+    const params = {
+      username: payload.username,
+      password: payload.password,
+      confirm: payload.confirm,
+    };
+    const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
+    const testScript =
+      SCRIPT_REGEX.test(params.username) ||
+      SCRIPT_REGEX.test(params.password) ||
+      SCRIPT_REGEX.test(params.confirm);
+    if (testScript) {
+      message.destroy();
+      message.error("Đăng ký thất bại");
+      setLoading(false);
 
-        } 
-        const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-        const testScript =
-          SCRIPT_REGEX.test(params.username) ||
-          SCRIPT_REGEX.test(params.password) ||
-          SCRIPT_REGEX.test(params.confirm);
-        if (testScript) {
-          message.destroy();
-          message.error("Đăng ký thất bại");
-          return;
-        }
-        try {
-        //   await signUp(params);
-        //   message.destroy();
-        //   message.success("Đăng ký thành công");
-        //   router.push("/login");
-        } catch (error) {
-          handleErrorMessage(error);
-        }
-      };
-
+      return;
+    }
+    try {
+      await register(params);
+      message.destroy();
+      message.success("Đăng ký thành công");
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+      handleErrorMessage(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Form onFinish={handleSubmit}>
@@ -84,6 +92,7 @@ function FormSignUp() {
           type="primary"
           htmlType="submit"
           className={styles.btnSignUp}
+          loading={loading}
         >
           Đăng ký
         </Button>
