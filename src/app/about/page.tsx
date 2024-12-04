@@ -8,6 +8,12 @@ import Link from "next/link";
 import AboutImage from "@/assets/images/aboutImage.jpg"
 import Image from "next/image";
 import { getAbout } from "@/service/manager";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "giới thiệu | Smile",
+  description: "thông tin cá nhân",
+};
 
 async function AboutMe() {
   const {payload:about}:any = await getAbout()

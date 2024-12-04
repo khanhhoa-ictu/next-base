@@ -7,12 +7,31 @@ import { getPostDetail } from "@/service/postDetail";
 import { IPost } from "@/types/managerType";
 import Comment from "../components/Comment";
 import ListComment from "../components/ListComment";
-import { revalidateTag } from "next/cache";
+import type { Metadata, ResolvingMetadata } from 'next'
+ 
+type Props = {
+  params: { slug: string }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
-async function PostDetail({ params }: any) {
-  const { slug } = params;
-
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const slug = params.slug
+ 
+  // fetch data
   const { payload: postDetail }: any = await getPostDetail(String(slug));
+ 
+  return {
+    title: postDetail.title + ' | Smile',
+  }
+}
+
+async function PostDetail({ params, searchParams }: Props) {
+  const { payload: postDetail }: any = await getPostDetail(String(params.slug));
+
   return (
     <div className={styles.container}>
       {!postDetail && <Loading />}

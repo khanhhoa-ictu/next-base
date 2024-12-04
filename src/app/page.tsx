@@ -4,9 +4,13 @@ import { IPost } from "@/types/managerType";
 import styles from "./styles.module.scss";
 import { Suspense } from "react";
 import Loading from "@/components/loading";
-const initPage = {
-  page: 1,
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Trang chủ | Smile",
+  description: "danh sách bài viết về lập trình",
 };
+
 async function Home() {
   const ListAllPost: any = await getAllPost({ page: 1 });
   // const handleChangePage = (page: number, pageSize: number) => {
@@ -15,7 +19,6 @@ async function Home() {
   //   };
   //   setPage(newPage);
   // };
-
   return (
     <Suspense fallback={<Loading/>}>
     <div className={styles.container}>
