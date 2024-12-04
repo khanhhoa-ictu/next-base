@@ -8,9 +8,11 @@ import styles from "./styles.module.scss";
 import { useState } from "react";
 import { handleErrorMessage } from "@/lib/utils";
 import { addPost } from "@/service/manager";
+import { useRouter } from "next/navigation";
 
 const { Option } = Select;
 function AddPost() {
+  const router = useRouter()
   const TextEditor = dynamic(() => import("@/components/text-editor"), {
     ssr: false,
   });
@@ -29,6 +31,7 @@ function AddPost() {
   const handleSubmit = async (payload: IPost) => {
     try {
       await addPost(payload);
+      router.refresh()
       setIsModalVisible(false);
     } catch (error) {
       handleErrorMessage(error);

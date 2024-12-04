@@ -6,6 +6,7 @@ import Image from "next/image";
 import { handleErrorMessage } from "@/lib/utils";
 import lock from "@/assets/images/lock.png";
 import styles from "./styles.module.scss";
+import { verifyPassword } from "@/service/forgot-password";
 
 interface VerifyProps {
   handleVerify: () => void;
@@ -23,7 +24,7 @@ function Verify({ handleVerify, email, handleLoading }: VerifyProps) {
 
     try {
       handleLoading(true);
-      //   await verifyPassword(newEmail);
+        await verifyPassword(newEmail);
       setOTP("");
       handleVerify();
     } catch (error) {

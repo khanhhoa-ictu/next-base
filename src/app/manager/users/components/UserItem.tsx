@@ -45,7 +45,7 @@ function UserItem(props: PostItemProps) {
         title={"Xóa người dùng"}
         loading={loading}
       >
-        Bạn có muốn xóa bài viết không
+        Bạn có muốn xóa người dùng này không
       </CustomModal>
     </tr>
   );

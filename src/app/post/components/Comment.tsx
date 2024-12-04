@@ -4,13 +4,15 @@ import TextArea from 'antd/es/input/TextArea'
 import { Button, message } from 'antd';
 import { checkScript, handleErrorMessage } from '@/lib/utils';
 import { IAddComment } from '@/types/post';
-import { addComment } from '@/service/postDetail';
+import { addComment, refreshComment } from '@/service/postDetail';
 import styles from '../styles.module.scss'
 import { useAppContext } from '@/AppProvider';
+import { useRouter } from 'next/navigation';
 interface CommentProps {
-    postDetail?: any
+    postDetail?: any,
 }
 function Comment(props: CommentProps) {
+  const router = useRouter();
     const { postDetail } = props;
     const {profile} = useAppContext()
     const [commentUser, setContentUser] = useState("");
@@ -33,6 +35,7 @@ function Comment(props: CommentProps) {
         }
         try {
           await addComment(newComment);
+          router.refresh()
         } catch (error) {
           handleErrorMessage(error);
         }

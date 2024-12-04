@@ -1,11 +1,12 @@
 "use client";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, notification } from "antd";
 import React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { handleErrorMessage } from "@/lib/utils";
 import styles from "./styles.module.scss";
 import lock from "@/assets/images/lock.png";
+import { forgotPassWord } from "@/service/forgot-password";
 
 interface ForgotProps {
   email: string;
@@ -19,7 +20,8 @@ function Forgot({ email }: ForgotProps) {
       email: email,
     };
     try {
-      //   await forgotPassWord(password);
+        await forgotPassWord(password);
+        notification.success({message: "thay đổi mật khẩu thành công"})
       router.push("/login");
     } catch (error) {
       handleErrorMessage(error);
