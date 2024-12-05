@@ -16,7 +16,8 @@ export const metadata: Metadata = {
 };
 
 async function AboutMe() {
-  const {payload:about}:any = await getAbout()
+  const {payload:about}:any = await getAbout();
+  console.log(about)
   return (
     <div className="sm:p-[85px] pt-[45px] p-[25px] 2xl:px-[125px]">
       <h1 className="text-5xl font-bold text-black mb-6 px-3">Our Mission</h1>

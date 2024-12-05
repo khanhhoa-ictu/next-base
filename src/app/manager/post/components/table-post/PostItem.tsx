@@ -6,12 +6,14 @@ import { Button } from "antd";
 import React, { useState } from "react";
 import EditPost from "../edit-post";
 import { IPost } from "@/types/managerType";
+import { useRouter } from "next/navigation";
 
 interface PostItemProps {
   post: any;
 }
 
 function PostItem(props: PostItemProps) {
+  const router = useRouter()
   const { post } = props;
   const [isOpenModal, setIsOpenModal] = useState({
     edit: false,
@@ -22,6 +24,7 @@ function PostItem(props: PostItemProps) {
     setLoading(true);
     try {
       await deletePost(post.id);
+      router.refresh()
     } catch (error) {
       handleErrorMessage(error);
     } finally {
@@ -36,6 +39,7 @@ function PostItem(props: PostItemProps) {
     try {
     //   setLoading(true);
       await editPost(newData);
+      router.refresh()
       setIsOpenModal({ ...isOpenModal, edit: false });
     } catch (error) {
       handleErrorMessage(error);

@@ -1,3 +1,35 @@
+.wrapperModal {
+    :global {
+        .ant-modal {
+            width: 80% !important;
+            border-radius: 6px;
+
+            .ant-modal-content {
+                border-radius: 8px;
+            }
+
+            .ant-modal-header {
+                border-radius: 8px 8px 0 0
+            }
+
+            .ant-modal-body {
+
+                .DraftEditor-editorContainer {
+                    min-height: 400px;
+                }
+
+                .rdw-editor-wrapper {
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+
+                .public-DraftEditor-content {
+                    padding: 0 10px;
+                }
+            }
+        }
+    }
+}
 .textEditor {
     min-height: 180px;
 
@@ -13,8 +45,8 @@
 
         .ck-content {
             overflow-y: auto;
-            max-height: 450px;
-            min-height: 250px;
+            max-height: 850px;
+            min-height: 350px;
 
             @media only screen and (max-width: 650px) {
                 max-height: 200px;
