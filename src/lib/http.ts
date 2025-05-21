@@ -75,11 +75,19 @@ const request = async (
     body,
     method,
   });
-  const payload: Response = await res.json();
+
+  let payload: any = null;
+  try {
+    payload = await res.json();
+  } catch (error) {
+    payload = null;
+  }
+
   const data = {
     status: res.status,
     payload,
   };
+
   if (!res?.ok) {
     if (res.status === ENTITY_ERROR_STATUS) {
       throw new EntityError(

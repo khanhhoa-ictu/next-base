@@ -5,14 +5,10 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { Suspense, useEffect } from 'react'
 
 function Logout() {
-    console.log('what')
-
     const router = useRouter();
-    const pathname = usePathname();
     const searchParams = useSearchParams();
     const token = searchParams.get('token');
     useEffect(()=>{
-        console.log('?zz')
         const handleLogout = async() =>{
             try {
                 await authApiRequest.logoutNextClientToNextServer(true);
@@ -23,7 +19,6 @@ function Logout() {
              
         }
         if(token === localStorage.getItem('token')){
-            console.log('zooo k')
             handleLogout()
         }
     },[token, router])

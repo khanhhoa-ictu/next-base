@@ -21,13 +21,14 @@ function RefreshToken() {
         }
       }
      
-    }, 1000 * 60 * 60 )
+    }, 1000 * 60 * 50 )
    
 
     return () => clearInterval(interval)
   }, []);
 
   const handleRefresh = async () => {
+
     try {
       const data:any = await refreshTokenToNextServer();
       localStorage.setItem('token',data.payload.token)
