@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import configProject from "@/config";
 
 const ENTITY_ERROR_STATUS = 422;
-const AUTH_STATUS = 401
+const AUTH_STATUS = 401;
 export class HttpError extends Error {
   status: number;
   payload: {
@@ -33,7 +33,37 @@ export class EntityError extends HttpError {
   }
 }
 
-export const isClient = typeof window !== 'undefined'
+export const isClient = typeof window !== "undefined";
+
+// const request = async (
+//   method: "GET" | "POST" | "PUT" | "DELETE",
+//   url: string,
+//   option?: ICustomOption
+// ) => {
+//   const baseUrl =
+//     option?.baseUrl ?? configProject.NEXT_PUBLIC_ENDPOINT;
+
+//   const res = await fetch(`${baseUrl}/${url}`, {
+//     method,
+//     body: option?.body ? JSON.stringify(option.body) : undefined,
+//     headers: {
+//       "Content-Type": "application/json",
+//       ...option?.headers,
+//     },
+//     ...option,
+//   });
+
+//   let payload: any = null;
+//   if (res.headers.get("content-type")?.includes("application/json")) {
+//     payload = await res.json(); // ✅
+//   }
+
+//   return {
+//     status: res.status,
+//     ok: res.ok,
+//     payload,
+//   };
+// };
 
 const request = async (
   method: "GET" | "POST" | "PUT" | "DELETE",
@@ -45,23 +75,14 @@ const request = async (
     "Content-Type": "application/json",
     Authorization: "",
   };
-  if(isClient){
-    const token = localStorage.getItem('token');
-    if(token){
-      baseHeaders.Authorization = `Bearer ${token}`
-    }
-  }
- 
-  const baseUrl =
-    option?.baseUrl !== undefined
-      ? option?.baseUrl
-      : configProject.NEXT_PUBLIC_ENDPOINT;
-  const res = await fetch(`${baseUrl}/${url}`, {
+
+  const res = await fetch(`/${url}`, {
     ...option,
     headers: {
       ...baseHeaders,
       ...option?.headers,
     },
+    credentials: "include",
     body,
     method,
   });
@@ -70,8 +91,6 @@ const request = async (
     status: res.status,
     payload,
   };
-
-
   if (!res?.ok) {
     if (res.status === ENTITY_ERROR_STATUS) {
       throw new EntityError(
@@ -80,43 +99,10 @@ const request = async (
           payload: IEntityError;
         }
       );
-    } else if(res.status === AUTH_STATUS){
-      if(isClient){
-        await fetch('/api/auth/logout',{
-          method:'POST',
-          body: JSON.stringify({force:true}),
-          headers: baseHeaders
-        })
-        localStorage.removeItem('token')
-        location.href = '/login'
-      }else{
-        const token = (option?.headers as any)?.Authorization.split('Bearer ')[1];
-        console.log('token', token)
-        console.log('auth', (option?.headers as any))
-
-        redirect(`/logout/?token=${token}`)
-        // await fetch('/api/auth/logout',{
-        //   method:'POST',
-        //   body: JSON.stringify({force:true}),
-        //   headers: baseHeaders
-        // })
-        // console.log('zooooo')
-        // clientToken.value = '';
-        // location.href = '/login'
-      }
     } else {
       throw new HttpError(data);
     }
   }
-  if (isClient) {
-    if (["/auth/login"].some((item)=>item === normalizePath(url))) {
-     localStorage.setItem('token', (payload as any).token)
-    }
-    if (["auth/logout"].some((item)=>item === normalizePath(url))) {
-      localStorage.removeItem('token')
-    }
-  }
-
   return data;
 };
 

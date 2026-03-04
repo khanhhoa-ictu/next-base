@@ -1,48 +1,59 @@
-import { decodeJWT } from "@/lib/utils";
-import { refreshTokenToServer } from "@/service/accout";
-import { IPayloadJWT } from "@/types";
+import { refreshTokenToNodeServer } from "@/service/accout";
 import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 export async function POST() {
-  const cookieStore = cookies();
-  const refreshToken = cookieStore.get("refreshToken");
-  const token = cookieStore.get("token");
-
-  if (!refreshToken?.value || !token?.value) {
-    return Response.json(
-      { message: "khong nhan duoc refreshToken" },
-      {
-        status: 400,
-      }
-    );
-  }
   try {
-    const res: any = await refreshTokenToServer(
-      refreshToken.value,
-      token.value
-    );
-    const payload: IPayloadJWT = decodeJWT(res.payload.token);
-    const expireDate = new Date(payload.exp * 1000).toUTCString();
-    // clientToken.value = res.payload.token;
-    return (Response as any).json(res.payload, {
-      status: 200,
-      statusText: "OK",
-      headers: {
-        "Set-Cookie": `token=${res.payload.token}; Path=/; HttpOnly; Expires=${expireDate}`,
-      },
+    const refreshToken = cookies().get("refreshToken")?.value;
+
+    if (!refreshToken) {
+      return NextResponse.json(
+        { message: "Refresh token not found" },
+        { status: 422 }
+      );
+    }
+
+    const res: any = await refreshTokenToNodeServer(refreshToken);
+    if (!res?.ok) {
+      return NextResponse.json(
+        { message: "Failed to refresh token" },
+        { status: 422 }
+      );
+    }
+
+    // SET COOKIES
+    cookies().set("accessToken", res.payload.accessToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      path: "/",
+      maxAge: 60 * 60, // 1h
+    });
+
+    // if backend rotate refresh token -> set again
+    cookies().set("refreshToken", refreshToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
+    cookies().set("expiresAt", String(res.payload.expiresAt), {
+      httpOnly: false, 
+      secure: true,
+      sameSite: "none",
+      path: "/",
+    });
+
+    return NextResponse.json({
+      accessToken: res.payload.accessToken,
+      expiresAt: res?.payload.expiresAt,
     });
   } catch (error) {
-    console.log(error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
   }
-
-  // return (Response as any).json('res', {
-  //   status: 200,
-  //   statusText: "OK",
-  //   headers:  {
-  //     "Set-Cookie": [
-  //       `token=${res.token}; Path=/; HttpOnly; Expires=${expireDate}`,
-  //       `refreshToken=${res.refreshToken}; Path=/; HttpOnly`,
-  //     ],
-  //   },
-  // });
 }

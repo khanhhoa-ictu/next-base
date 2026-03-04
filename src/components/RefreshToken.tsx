@@ -1,42 +1,40 @@
 "use client";
-import { decodeJWT, handleErrorMessage } from "@/lib/utils";
-import { refreshTokenToNextServer } from "@/service/accout";
-import { IPayloadJWT } from "@/types";
-import { Button } from "antd";
-import React, { useEffect } from "react";
-
+import { authApiRequest } from "@/service/auth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 function RefreshToken() {
+  const router = useRouter();
   useEffect(() => {
-    const interval = setInterval(()=>{
+    const interval = setInterval(() => {
       const now = new Date();
-      const newToken = localStorage.getItem('token');
-      if(newToken){
-        const payload: IPayloadJWT = decodeJWT(newToken );
-        const expireDate = new Date(payload.exp * 1000);
-        const compare = (expireDate.getTime() - now.getTime()) / 86400000;
-        if(compare < 1){
-          handleRefresh()
+      const expiresAt = Number(
+        document.cookie
+          .split("; ")
+          .find((c) => c.startsWith("expiresAt="))
+          ?.split("=")[1]
+      );
+      if (expiresAt) {
+        const compare =
+          (Number(expiresAt) - Math.floor(now.getTime() / 1000)) / 60;
+        console.log(compare, "minutes to expire");
+        if (compare <= 1) {
+          handleRefresh();
         }
       }
-     
-    }, 1000 * 60 * 60 )
-   
+    }, 1000 * 60);
 
-    return () => clearInterval(interval)
+    return () => clearInterval(interval);
   }, []);
+
   const handleRefresh = async () => {
     try {
-      const data:any = await refreshTokenToNextServer();
-      localStorage.setItem('token',data.payload.token)
+      await authApiRequest.refreshAccessTokenToNextServer();
     } catch (error) {
-      handleErrorMessage({ error });
+      await authApiRequest.logoutNextClientToNextServer();
+      router.push("/login");
     }
   };
-  return (
-    <div>
-      <Button onClick={handleRefresh}>refresh</Button>
-    </div>
-  );
+  return <></>;
 }
 
 export default RefreshToken;

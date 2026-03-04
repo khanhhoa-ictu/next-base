@@ -1,20 +1,20 @@
-import http from "@/lib/http";
+import http from "@/lib/httpClient";
+import { httpServerApi } from "@/lib/httpServer";
 
-export const getAccount = (id: any) => {
-  return http.get(`about`);
+export const refreshTokenToServer = (refreshToken: string, token: string) => {
+  return http.post("refreshToken", { refreshToken });
 };
 
-export const getAccountSever = (token: any) => {
-  return http.get(`about`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getAccountNodeServer = () => httpServerApi.get("auth/user/profile",{cache: 'no-store'});
+
+export const login = (infoUser: any) => {
+  return httpServerApi.post("login", infoUser);
 };
-export const refreshTokenToServer = (refreshToken: string, token: string) =>{
-  return  http.post("refreshToken", {refreshToken});
+
+export const refreshTokenToNodeServer = (refreshToken: string) => {
+  return httpServerApi.post("auth/refresh-token", { refreshToken });
+};
+
+export const logoutNextServerToNodeServer = () => {
+  return httpServerApi.post("auth/logout", {});
 }
- 
-
-export const refreshTokenToNextServer = () =>
-  http.post("api/auth/refresh-token", {}, { baseUrl: "" });

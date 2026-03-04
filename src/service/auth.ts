@@ -1,20 +1,20 @@
-import http from "@/lib/http"
+import http from "@/lib/httpClient";
 
-export const login = (infoUser:any) =>{
-    return http.post('login',infoUser)
-}
+export const register = (infoUser: any) => {
+  return http.post("register", infoUser);
+};
 
-export const authApiRequest ={
-    authNextServer:(body:any)=>{
-        return http.post('api/auth', body,{
-            baseUrl:''
-        })
-    },
-    logoutNextClientToNextServer:(force?: boolean)=>{
-        return http.post('api/auth/logout', {
-            force
-        },{
-            baseUrl:''
-        })
-    }
-}
+export const authApiRequest = {
+  authNextServer: (body: any) => {
+    return http.post("api/auth", body);
+  },
+  refreshAccessTokenToNextServer: () => {
+    return http.post("api/auth/refresh-token", {});
+  },
+  logoutNextClientToNextServer: () => {
+    return http.post(
+      "api/auth/logout",
+      {}
+    );
+  },
+};

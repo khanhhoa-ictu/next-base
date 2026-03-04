@@ -1,10 +1,9 @@
-import AppProvider from "@/AppProvider";
 import Navbar from "@/components/Navbar";
 import RefreshToken from "@/components/RefreshToken";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,13 +21,11 @@ export default function RootLayout({
     <html suppressHydrationWarning={true} lang="en">
       <body className="min-h-screen">
         <AntdRegistry>
-        <Navbar/>
-        <RefreshToken/>
-        <AppProvider>
-        {children}
-        </AppProvider>
+          <Navbar />
+          <RefreshToken />
+          {children}
         </AntdRegistry>
-        </body>
+      </body>
     </html>
   );
 }
